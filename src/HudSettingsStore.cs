@@ -120,6 +120,8 @@ public static class HudSettingsStore
 
         public string? ErrorBorderColor { get; set; }
 
+        public string? WarningBorderColor { get; set; }
+
         public double? AnchorX { get; set; }
 
         public double? AnchorY { get; set; }
@@ -142,6 +144,7 @@ public static class HudSettingsStore
                 HoverBackgroundColor = RgbaColor.ToString(normalizedSettings.HoverBackgroundColor),
                 LockedBorderColor = RgbaColor.ToString(normalizedSettings.LockedBorderColor),
                 ErrorBorderColor = RgbaColor.ToString(normalizedSettings.ErrorBorderColor),
+                WarningBorderColor = RgbaColor.ToString(normalizedSettings.WarningBorderColor),
                 AnchorX = normalizedSettings.AnchorX,
                 AnchorY = normalizedSettings.AnchorY,
                 PositionX = normalizedSettings.PositionX,
@@ -162,6 +165,7 @@ public static class HudSettingsStore
                 HoverBackgroundColor = ParseColorOrDefault(HoverBackgroundColor, defaults.HoverBackgroundColor),
                 LockedBorderColor = ParseColorOrDefault(LockedBorderColor, defaults.LockedBorderColor),
                 ErrorBorderColor = ParseColorOrDefault(ErrorBorderColor, defaults.ErrorBorderColor),
+                WarningBorderColor = ParseColorOrDefault(WarningBorderColor, defaults.WarningBorderColor),
                 AnchorX = AnchorX ?? defaults.AnchorX,
                 AnchorY = AnchorY ?? defaults.AnchorY,
                 PositionX = PositionX ?? defaults.PositionX,

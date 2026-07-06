@@ -16,6 +16,7 @@ public partial class MainWindow : Window
     private bool isDragging;
     private bool isDragRenderPending;
     private bool isCommandError;
+    private bool isCommandWarning;
     private bool isHudHovered;
     private bool isLocked;
     private bool isRefreshLoopRunning;
@@ -358,7 +359,9 @@ public partial class MainWindow : Window
             : null;
         HudText.ErrorBorder = isCommandError
             ? CreateFrozenBrush(currentSettings.ErrorBorderColor)
-            : null;
+            : isCommandWarning
+                ? CreateFrozenBrush(currentSettings.WarningBorderColor)
+                : null;
     }
 
     private static SolidColorBrush CreateFrozenBrush(MediaColor color)
@@ -465,8 +468,16 @@ public partial class MainWindow : Window
                 errors.Add("Command timed out and was terminated.");
             }
 
-            isCommandError = errors.Count > 0;
-            if (isCommandError)
+            bool hasOutputErrors = errors.Count > 0;
+            bool hasNonZeroExitCode = !result.TimedOut && result.ExitCode != 0;
+            if (!hasOutputErrors && hasNonZeroExitCode)
+            {
+                errors.Add(FormattableString.Invariant($"Command exited with code {result.ExitCode}."));
+            }
+
+            isCommandError = hasOutputErrors;
+            isCommandWarning = !hasOutputErrors && hasNonZeroExitCode;
+            if (errors.Count > 0)
             {
                 RefreshErrorLogger.Write(commandLine, result, errors);
             }
@@ -486,6 +497,7 @@ public partial class MainWindow : Window
                 null,
                 new[] { $"Command refresh failed: {exception.GetType().Name}: {exception.Message}" });
             isCommandError = true;
+            isCommandWarning = false;
             UpdateHudInteractionVisuals();
             if (HudText.Visibility != Visibility.Visible)
             {

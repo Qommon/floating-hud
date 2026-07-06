@@ -131,6 +131,12 @@ public partial class ConfigWindow : Window
         e.Handled = true;
     }
 
+    private void WarningBorderColorPreview_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        PickColorForPreview(WarningBorderColorPreview);
+        e.Handled = true;
+    }
+
     private void ColorAlphaSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         if (isUpdatingColorControls || sender is not WpfSlider slider)
@@ -293,6 +299,11 @@ public partial class ConfigWindow : Window
                 ErrorBorderAlphaSlider,
                 ErrorBorderColorPreview,
                 Settings.ErrorBorderColor),
+            new ColorSettingControls(
+                WarningBorderColorInput,
+                WarningBorderAlphaSlider,
+                WarningBorderColorPreview,
+                Settings.WarningBorderColor),
         };
     }
 

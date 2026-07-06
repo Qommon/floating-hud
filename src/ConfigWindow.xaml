@@ -23,6 +23,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="92" />
@@ -268,7 +269,48 @@
                      TextChanged="ColorInput_TextChanged" />
         </Grid>
 
-        <StackPanel Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+        <TextBlock Grid.Row="8"
+                   Grid.Column="0"
+                   Style="{StaticResource FieldLabelStyle}"
+                   Text="警告外框"
+                   ToolTip="标准输出合法但命令退出码非零时显示的外框颜色。" />
+        <Grid Grid.Row="8" Grid.Column="1" Height="20" Margin="0,0,0,18">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="32" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="94" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="颜色" />
+            <Border x:Name="WarningBorderColorPreview"
+                    Grid.Column="1"
+                    Width="18"
+                    Height="12"
+                    Cursor="Hand"
+                    MouseLeftButtonDown="WarningBorderColorPreview_MouseLeftButtonDown" />
+            <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="不透明度" />
+            <Slider x:Name="WarningBorderAlphaSlider"
+                    Grid.Column="4"
+                    Height="20"
+                    Minimum="0"
+                    Maximum="255"
+                    TickFrequency="1"
+                    SmallChange="1"
+                    LargeChange="16"
+                    IsSnapToTickEnabled="True"
+                    ValueChanged="ColorAlphaSlider_ValueChanged" />
+            <TextBox x:Name="WarningBorderColorInput"
+                     Grid.Column="6"
+                     Height="20"
+                     VerticalContentAlignment="Center"
+                     Text="{Binding WarningBorderColorText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     TextChanged="ColorInput_TextChanged" />
+        </Grid>
+
+        <StackPanel Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button IsDefault="True" MinWidth="76" Margin="0,0,8,0" Click="OkButton_Click" Content="确定" />
             <Button IsCancel="True" MinWidth="76" Content="取消" />
         </StackPanel>

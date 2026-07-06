@@ -18,6 +18,7 @@ internal sealed class ConfigWindowViewModel : INotifyPropertyChanged
     private string hoverBackgroundColorText = string.Empty;
     private string lockedBorderColorText = string.Empty;
     private string errorBorderColorText = string.Empty;
+    private string warningBorderColorText = string.Empty;
 
     private ConfigWindowViewModel(HudSettings initialSettings)
     {
@@ -33,6 +34,7 @@ internal sealed class ConfigWindowViewModel : INotifyPropertyChanged
         HoverBackgroundColorText = RgbaColor.ToString(initialSettings.HoverBackgroundColor);
         LockedBorderColorText = RgbaColor.ToString(initialSettings.LockedBorderColor);
         ErrorBorderColorText = RgbaColor.ToString(initialSettings.ErrorBorderColor);
+        WarningBorderColorText = RgbaColor.ToString(initialSettings.WarningBorderColor);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -105,6 +107,12 @@ internal sealed class ConfigWindowViewModel : INotifyPropertyChanged
         set => SetField(ref errorBorderColorText, value);
     }
 
+    public string WarningBorderColorText
+    {
+        get => warningBorderColorText;
+        set => SetField(ref warningBorderColorText, value);
+    }
+
     public static ConfigWindowViewModel FromSettings(HudSettings settings)
     {
         return new ConfigWindowViewModel(settings.Normalize());
@@ -156,6 +164,12 @@ internal sealed class ConfigWindowViewModel : INotifyPropertyChanged
             return false;
         }
 
+        if (!RgbaColor.TryParse(WarningBorderColorText, out MediaColor warningBorderColor))
+        {
+            errorMessage = "请输入有效的警告外框 RGBA 色值。";
+            return false;
+        }
+
         if (!TryParseAnchorText(AnchorXText, out double parsedAnchorX) ||
             !TryParseAnchorText(AnchorYText, out double parsedAnchorY))
         {
@@ -174,6 +188,7 @@ internal sealed class ConfigWindowViewModel : INotifyPropertyChanged
                 HoverBackgroundColor = hoverBackgroundColor,
                 LockedBorderColor = lockedBorderColor,
                 ErrorBorderColor = errorBorderColor,
+                WarningBorderColor = warningBorderColor,
             },
             FontSize).Normalize();
         return true;
