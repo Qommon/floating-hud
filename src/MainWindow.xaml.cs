@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -6,6 +8,7 @@ using MediaColor = System.Windows.Media.Color;
 using MediaFontFamily = System.Windows.Media.FontFamily;
 using WindowsMouseEventArgs = System.Windows.Input.MouseEventArgs;
 using WindowsCursors = System.Windows.Input.Cursors;
+using WindowsMessageBox = System.Windows.MessageBox;
 using WindowsMenuItem = System.Windows.Controls.MenuItem;
 using WindowsPoint = System.Windows.Point;
 
@@ -259,6 +262,28 @@ public partial class MainWindow : Window
     private void ClearErrorLogsMenuItem_Click(object sender, RoutedEventArgs e)
     {
         RefreshErrorLogger.Clear();
+    }
+
+    private void OpenSettingsDirectoryMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Directory.CreateDirectory(HudSettingsStore.SettingsDirectory);
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = HudSettingsStore.SettingsDirectory,
+                UseShellExecute = true,
+            });
+        }
+        catch (Exception exception)
+        {
+            WindowsMessageBox.Show(
+                this,
+                $"无法打开配置目录：{exception.Message}",
+                "Floating HUD",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+        }
     }
 
     private void CloseMenuItem_Click(object sender, RoutedEventArgs e)

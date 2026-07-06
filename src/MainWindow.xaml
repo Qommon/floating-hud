@@ -31,6 +31,8 @@
                               Click="LockMenuItem_Click" />
                     <MenuItem Header="配置"
                               Click="ConfigureMenuItem_Click" />
+                    <MenuItem Header="打开配置目录"
+                              Click="OpenSettingsDirectoryMenuItem_Click" />
                     <MenuItem Header="清空错误日志"
                               Click="ClearErrorLogsMenuItem_Click" />
                     <Separator />
