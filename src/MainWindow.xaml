@@ -29,6 +29,8 @@
                     <MenuItem x:Name="LockMenuItem"
                               Header="锁定"
                               Click="LockMenuItem_Click" />
+                    <MenuItem Header="立即刷新"
+                              Click="RefreshNowMenuItem_Click" />
                     <MenuItem Header="配置"
                               Click="ConfigureMenuItem_Click" />
                     <MenuItem Header="打开配置目录"

@@ -254,6 +254,12 @@ public partial class MainWindow : Window
         }
     }
 
+    private void RefreshNowMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        StartRefreshTimer();
+        RequestRefreshFromCommand();
+    }
+
     private void ClearErrorLogsMenuItem_Click(object sender, RoutedEventArgs e)
     {
         RefreshErrorLogger.Clear();
