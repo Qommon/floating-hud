@@ -22,6 +22,8 @@ public sealed record HudSettings
 
     public MediaColor WarningBorderColor { get; init; } = MediaColor.FromArgb(0xFF, 0xFF, 0xD8, 0x00);
 
+    public bool IsLocked { get; init; }
+
     public double AnchorX { get; init; }
 
     public double AnchorY { get; init; }

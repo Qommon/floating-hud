@@ -226,13 +226,8 @@ public partial class MainWindow : Window
         isLocked = !isLocked;
         isDragging = false;
         HudText.ReleaseMouseCapture();
-        HudText.Cursor = isLocked ? WindowsCursors.Arrow : WindowsCursors.SizeAll;
-        UpdateHudInteractionVisuals();
-
-        if (sender is WindowsMenuItem menuItem)
-        {
-            menuItem.Header = isLocked ? "解锁" : "锁定";
-        }
+        ApplyLockStateToHud();
+        SaveCurrentSettings();
     }
 
     private void ConfigureMenuItem_Click(object sender, RoutedEventArgs e)
@@ -294,8 +289,16 @@ public partial class MainWindow : Window
     private void ApplySettings(HudSettings settings)
     {
         currentSettings = settings.Normalize();
+        isLocked = currentSettings.IsLocked;
         double logicalFontSize = HudFontSize.GetLogicalFontSize(currentSettings);
         ApplyLogicalFontSize(logicalFontSize);
+        ApplyLockStateToHud();
+    }
+
+    private void ApplyLockStateToHud()
+    {
+        HudText.Cursor = isLocked ? WindowsCursors.Arrow : WindowsCursors.SizeAll;
+        LockMenuItem.Header = isLocked ? "解锁" : "锁定";
         UpdateHudInteractionVisuals();
     }
 
@@ -401,6 +404,7 @@ public partial class MainWindow : Window
         WindowsPoint screenPosition = GetHudScreenPosition();
         return currentSettings with
         {
+            IsLocked = isLocked,
             PositionX = screenPosition.X,
             PositionY = screenPosition.Y,
         };

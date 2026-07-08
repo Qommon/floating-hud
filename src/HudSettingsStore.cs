@@ -122,6 +122,8 @@ public static class HudSettingsStore
 
         public string? WarningBorderColor { get; set; }
 
+        public bool? IsLocked { get; set; }
+
         public double? AnchorX { get; set; }
 
         public double? AnchorY { get; set; }
@@ -145,6 +147,7 @@ public static class HudSettingsStore
                 LockedBorderColor = RgbaColor.ToString(normalizedSettings.LockedBorderColor),
                 ErrorBorderColor = RgbaColor.ToString(normalizedSettings.ErrorBorderColor),
                 WarningBorderColor = RgbaColor.ToString(normalizedSettings.WarningBorderColor),
+                IsLocked = normalizedSettings.IsLocked,
                 AnchorX = normalizedSettings.AnchorX,
                 AnchorY = normalizedSettings.AnchorY,
                 PositionX = normalizedSettings.PositionX,
@@ -166,6 +169,7 @@ public static class HudSettingsStore
                 LockedBorderColor = ParseColorOrDefault(LockedBorderColor, defaults.LockedBorderColor),
                 ErrorBorderColor = ParseColorOrDefault(ErrorBorderColor, defaults.ErrorBorderColor),
                 WarningBorderColor = ParseColorOrDefault(WarningBorderColor, defaults.WarningBorderColor),
+                IsLocked = IsLocked ?? defaults.IsLocked,
                 AnchorX = AnchorX ?? defaults.AnchorX,
                 AnchorY = AnchorY ?? defaults.AnchorY,
                 PositionX = PositionX ?? defaults.PositionX,
